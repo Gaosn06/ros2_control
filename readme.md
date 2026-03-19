@@ -1,0 +1,5 @@
+#这是一个ros2_control的例子，自己手动编写了控制器部分，和硬件接口部分。
+直接运行：ros2 launch controlko_bringup rrbot_real_launch.py 启动程序 rviz建立模型通信。
+发布和订阅接收到的数据
+ros2 run test_my_position_controller publish_command
+ros2 run test_my_position_controller rec_state

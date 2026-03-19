@@ -13,7 +13,9 @@ class RecState(Node):
             self.get_logger().info(f"{msg.joint_names[i]}/displacements:{msg.displacements[i]}")
             self.get_logger().info(f"{msg.joint_names[i]}/velocities:{msg.velocities[i]}")
             self.get_logger().info(f"{msg.joint_names[i]}/efforts:{msg.efforts[i]}")
-            self.get_logger().info(f"{msg.sensor_names[i]}/torques:{msg.torques[i]}")
+        for i in range(0,3):    
+            self.get_logger().info(f"{msg.sensor_names[0]}/sensor_tp{i}:{msg.sensor_tp[i]}")
+
         self.get_logger().info("---------------------------------------------")
 
 def main(args=None):
