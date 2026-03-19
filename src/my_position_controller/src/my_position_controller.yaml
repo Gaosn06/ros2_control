@@ -1,0 +1,87 @@
+# Copyright (c) 20224 b»robotized group
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+#
+# Source of this file are templates in
+# [RosTeamWorkspace](https://github.com/b-robotized/ros_team_workspace) repository.
+#
+
+my_position_controller:
+  joints: {
+    type: string_array,
+    default_value: [],
+    description: "Specifies joints used by the controller. If state joints parameter is defined, then only command joints are defined with this parameter.",
+    read_only: true,
+    validation: {
+      unique<>: null,
+      not_empty<>: null,
+    }
+  }
+  
+  state_joints: {
+    type: string_array,
+    default_value: [],
+    description: "(optional) Specifies joints for reading states. This parameter is only relevant when state joints are different then command joint, i.e., when a following controller is used.",
+    read_only: true,
+    validation: {
+      unique<>: null,
+    }
+  }
+
+  command_interfaces: {
+    type: string_array,
+    default_value: [],
+    description: "Command interfaces provided by the hardware interface for all joints",
+    read_only: true,
+    validation: {
+      unique<>: null,
+      subset_of<>: [["position", "velocity", "acceleration", "effort",]],
+    }
+  }
+
+  state_interfaces: {
+    type: string_array,
+    default_value: [],
+    description: "State interfaces provided by the hardware for all joints.",
+    read_only: true,
+    validation: {
+      unique<>: null,
+      subset_of<>: [["position", "velocity", "acceleration","effort",]],
+    }
+  }
+
+  # ========== 新增：传感器相关参数 ==========
+  sensors: {
+    type: string_array,
+    default_value: [],
+    description: "Specifies sensors used by the controller (e.g., tcp_fts_sensor).",
+    read_only: true,
+    validation: {
+      unique<>: null,
+    }
+  }
+
+  sensor_state_interfaces: {
+    type: string_array,
+    default_value: [],
+    description: "State interfaces for all sensors (e.g., tp).",
+    read_only: true,
+    validation: {
+      unique<>: null,
+      subset_of<>: [["tp", "tp1", "tp2"]], # 适配你的双tp值场景
+    }
+  }
+
+#这里面定义的参数会在controller的构造函数中被读取并保存在params_成员变量中，
+#params_的结构体由这个配置文件自动生成在my_position_controller_parameters.hpp中，成员变量的名字和类型与这里定义的一一对应。
